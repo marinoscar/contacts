@@ -51,6 +51,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="images\delete.gif" />
     <Content Include="index.html" />
     <Content Include="scripts\bootstrap\css\bootstrap-responsive.css" />
     <Content Include="scripts\bootstrap\css\bootstrap-responsive.min.css" />
@@ -60,8 +61,12 @@
     <Content Include="scripts\bootstrap\img\glyphicons-halflings.png" />
     <Content Include="scripts\bootstrap\js\bootstrap.js" />
     <Content Include="scripts\bootstrap\js\bootstrap.min.js" />
+    <Content Include="scripts\extjs\bootstrap.js" />
     <Content Include="scripts\extjs\ext-all.js" />
+    <Content Include="scripts\extjs\ext.js" />
     <Content Include="scripts\jquery-1.8.1.min.js" />
+    <Content Include="style\ext-all.css" />
+    <Content Include="views\contactlist.js" />
     <Content Include="web.config" />
     <Content Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
