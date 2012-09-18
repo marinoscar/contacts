@@ -33,6 +33,8 @@ Ext.onReady(function () {
     // setup the state provider, all state information will be saved to a cookie
     Ext.state.Manager.setProvider(Ext.create('Ext.state.CookieProvider'));
 
+    GetContacts();
+
     var required = '<span style="color:red;font-weight:bold" data-qtip="Required">*</span>';
 
     // create the Grid
@@ -126,3 +128,20 @@ Ext.onReady(function () {
     grid.getSelectionModel().select(0);
 
 });
+
+function GetContacts() {
+    $.getJSON("api/contacts", 
+              function (data) {
+                  $('#serviceData').empty(); // Clear the table body.
+
+                  // Loop through the list of products.
+                  $.each(data, function (key, val) {
+                      // Add a table row for the product.
+                      var row = '<tr><td>' + val.Name + '</td><td>' + val.LastName + '</td><td>' + val.Description + '</td>';
+                      $('<tr/>', { text: row })  // Append the name.
+                        .appendTo($('#serviceData'));
+                  });
+              });
+}
+
+
