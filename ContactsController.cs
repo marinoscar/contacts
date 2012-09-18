@@ -19,22 +19,22 @@ namespace Contacts
 
         public IEnumerable<Contact> GetContacts()
         {
-            if(_contacts == null) InitializeController();
+            if (_contacts == null) InitializeController();
             return _contacts;
         }
 
         
-        public void Post([FromBody]string value)
-        {
-        }
+        //public void Post([FromBody]string value)
+        //{
+        //}
 
-        public void Put(int id, [FromBody]string value)
-        {
-        }
+        //public void Put(int id, [FromBody]string value)
+        //{
+        //}
 
-        public void Delete(int id)
-        {
-        }
+        //public void Delete(int id)
+        //{
+        //}
     }
 
     public class Contact

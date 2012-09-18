@@ -85,6 +85,7 @@
     <Content Include="scripts\bootstrap\js\bootstrap.js" />
     <Content Include="scripts\bootstrap\js\bootstrap.min.js" />
     <Content Include="scripts\extjs\bootstrap.js" />
+    <Content Include="scripts\extjs\ext-all-debug.js" />
     <Content Include="scripts\extjs\ext-all.js" />
     <Content Include="scripts\jquery-1.8.1.min.js" />
     <Content Include="style\ext-all.css" />

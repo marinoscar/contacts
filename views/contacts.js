@@ -8,30 +8,30 @@
 Ext.define('Contact', {
     extend: 'Ext.data.Model',
     fields: [
-       { name: 'Name' },
-       { name: 'LastName' },
-       { name: 'Description' },
-       { name: 'Id' }
+       { name: 'Id', type: 'int' },
+       { name: 'Name', type: 'string' },
+       { name: 'LastName', type: 'string' },
+       { name: 'Description', type: 'string' }
     ],
     idProperty: 'Id'
 });
 
-// sample data
-var contactData = [
-        ['Oscar', 'Marin', 'N/A', 1],
-        ['Pamela', 'Molina', 'N/A', 2]
-    ];
-
-// create the data store
-var store = Ext.create('Ext.data.ArrayStore', {
+var jsonStore = new Ext.data.JsonStore({
+    storeId: 'jsonStore',
     model: 'Contact',
-    data: contactData
+    autoLoad: true,
+    proxy: {
+        type: 'ajax',
+        url: 'api/contacts',
+        reader: {
+            type: 'json',
+            idProperty: 'Id'
+        }
+    }
 });
 
 Ext.onReady(function () {
     Ext.QuickTips.init();
-    // setup the state provider, all state information will be saved to a cookie
-    Ext.state.Manager.setProvider(Ext.create('Ext.state.CookieProvider'));
 
     GetContacts();
 
@@ -39,7 +39,8 @@ Ext.onReady(function () {
 
     // create the Grid
     var grid = Ext.create('Ext.grid.Panel', {
-        store: store,
+        id: 'contactGrid',
+        store: jsonStore,
         stateful: true,
         collapsible: true,
         multiSelect: true,
@@ -125,23 +126,28 @@ Ext.onReady(function () {
         }]
     });
 
-    grid.getSelectionModel().select(0);
+    //grid.getSelectionModel().select(0);
 
 });
 
 function GetContacts() {
-    $.getJSON("api/contacts", 
+    $.getJSON("api/contacts",
               function (data) {
-                  $('#serviceData').empty(); // Clear the table body.
-
-                  // Loop through the list of products.
-                  $.each(data, function (key, val) {
-                      // Add a table row for the product.
-                      var row = '<tr><td>' + val.Name + '</td><td>' + val.LastName + '</td><td>' + val.Description + '</td>';
-                      $('<tr/>', { text: row })  // Append the name.
-                        .appendTo($('#serviceData'));
-                  });
+                  GetContactsCallBack(data);
               });
+}
+
+function GetContactsCallBack(data) {
+    $('#serviceData').empty(); // Clear the table body.
+    var value = JSON.stringify(data);
+    alert(value);
+    // Loop through the list of products.
+    $.each(data, function (key, val) {
+        // Add a table row for the product.
+        var row = '<tr><td>' + val.Name + '</td><td>' + val.LastName + '</td><td>' + val.Description + '</td>';
+        $('<tr/>', { text: row })  // Append the name.
+                        .appendTo($('#serviceData'));
+    });
 }
 
 
