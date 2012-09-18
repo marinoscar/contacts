@@ -22,7 +22,7 @@ namespace Contacts
         {
             DbContext = context;
             DbContext.LoadEntities();
-            Contacts = (IDbSet<Contact>)DbContext.Entities[0];
+            Contacts = (IDbSet<Contact>)DbContext.Entities.Single(i => i.Name == "Contacts").Entity;
         }
 
         public IDbSet<Contact> Contacts { get; set; }

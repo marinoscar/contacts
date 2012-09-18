@@ -22,11 +22,14 @@ namespace Contacts
         
         public virtual DbSet<Contact> Contacts { get; set; }
 
-        public List<object> Entities { get; private set; }
+        public List<RegisteredEntity> Entities { get; private set; }
 
         public void LoadEntities()
         {
-            Entities = new List<object> {Contacts};
+            Entities = new List<RegisteredEntity>
+                           {
+                               new RegisteredEntity(){Name = "Contacts", Entity = Contacts}
+                           };
         }
     }
 
@@ -35,7 +38,7 @@ namespace Contacts
         /// <summary>
         /// Contains a collection of the data entities in the DbContext
         /// </summary>
-        List<object> Entities { get; }
+        List<RegisteredEntity> Entities { get; }
 
         /// <summary>
         /// Loads the DbContext into the Entities collection
@@ -46,5 +49,16 @@ namespace Contacts
         /// Persists the changes to the data store
         /// </summary>
         int SaveChanges();
+    }
+
+    public class RegisteredEntity
+    {
+        public string Name { get; set; }
+        public object Entity { get; set; }
+
+        public T Cast<T>()
+        {
+            return (T) Entity;
+        }
     }
 }

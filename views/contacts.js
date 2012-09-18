@@ -11,7 +11,12 @@ Ext.define('Contact', {
        { name: 'Id', type: 'int' },
        { name: 'Name', type: 'string' },
        { name: 'LastName', type: 'string' },
-       { name: 'Description', type: 'string' }
+       { name: 'Description', type: 'string' },
+       { name: 'OfficeNumber', type: 'string' },
+       { name: 'MobileNumber', type: 'string' },
+       { name: 'HomeNumber', type: 'string' },
+       { name: 'Latitude', type: 'float' },
+       { name: 'Longitude', type: 'float' }
     ],
     idProperty: 'Id'
 });
@@ -32,8 +37,6 @@ var jsonStore = new Ext.data.JsonStore({
 
 Ext.onReady(function () {
     Ext.QuickTips.init();
-
-    GetContacts();
 
     var required = '<span style="color:red;font-weight:bold" data-qtip="Required">*</span>';
 
@@ -126,28 +129,6 @@ Ext.onReady(function () {
         }]
     });
 
-    //grid.getSelectionModel().select(0);
-
 });
-
-function GetContacts() {
-    $.getJSON("api/contacts",
-              function (data) {
-                  GetContactsCallBack(data);
-              });
-}
-
-function GetContactsCallBack(data) {
-    $('#serviceData').empty(); // Clear the table body.
-    var value = JSON.stringify(data);
-    alert(value);
-    // Loop through the list of products.
-    $.each(data, function (key, val) {
-        // Add a table row for the product.
-        var row = '<tr><td>' + val.Name + '</td><td>' + val.LastName + '</td><td>' + val.Description + '</td>';
-        $('<tr/>', { text: row })  // Append the name.
-                        .appendTo($('#serviceData'));
-    });
-}
 
 
