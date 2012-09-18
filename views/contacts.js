@@ -27,7 +27,7 @@ var jsonStore = new Ext.data.JsonStore({
     autoLoad: true,
     proxy: {
         type: 'rest',
-        url: 'api/contacts',
+        url: 'api/contacts/getcontacts',
         reader: {
             type: 'json',
             idProperty: 'Id'
