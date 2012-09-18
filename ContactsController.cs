@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Web.Http;
 
 namespace Contacts
@@ -6,21 +7,10 @@ namespace Contacts
     public class ContactsController : ApiController
     {
 
-        private IList<Contact> _contacts;
- 
-        private void InitializeController()
-        {
-            _contacts = new List<Contact>()
-                            {
-                                new Contact(){Id = 1, Name = "Oscar", LastName = "Marin"},
-                                new Contact(){Id = 2, Name = "Pamela", LastName = "Molina"}
-                            };
-        }
-
         public IEnumerable<Contact> GetContacts()
         {
-            if (_contacts == null) InitializeController();
-            return _contacts;
+            var repository = new ContactsRepository();
+            return repository.GetAllContacts();
         }
 
         
@@ -37,11 +27,17 @@ namespace Contacts
         //}
     }
 
+    [Table("contact")]
     public class Contact
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public string LastName { get; set; }
         public string Description { get; set; }
+        public string OfficeNumber { get; set; }
+        public string MobileNumber { get; set; }
+        public string HomeNumber { get; set; }
+        public float Latitude { get; set; }
+        public float Longitude { get; set; }
     }
 }

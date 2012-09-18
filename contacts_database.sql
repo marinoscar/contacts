@@ -11,48 +11,18 @@ CREATE TABLE `contact` (
   `Name` varchar(45) NOT NULL,
   `LastName` varchar(45) DEFAULT NULL,
   `Description` varchar(255) DEFAULT NULL,
+  `OfficeNumber` varchar(45) NULL,
+  `MobileNumber` varchar(45) NULL,
+  `HomeNumber` varchar(45) NULL,
+  `Latitude` float NULL,
+  `Longitude` float NULL,
   PRIMARY KEY (`Id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1
 $$
 
-CREATE TABLE `location` (
-  `Id` int(11) NOT NULL AUTO_INCREMENT,
-  `Name` varchar(45) NOT NULL,
-  `ContactId` int(11) NOT NULL,
-  `Latitude` float NOT NULL,
-  `Longitude` float NOT NULL,
-  PRIMARY KEY (`Id`),
-  UNIQUE KEY `Name_UNIQUE` (`Name`, `ContactId`),
-  KEY `FK_Location_Contact_idx` (`ContactId`),
-  CONSTRAINT `FK_Location_Contact` FOREIGN KEY (`ContactId`) REFERENCES `contact` (`Id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 
+
+INSERT INTO contact VALUES (1, 'Oscar', 'Marin', NULL, '+506 2220-1020', '+506 8830-4050', NULL, 10.036099, -84.081813);
 $$
 
-CREATE TABLE `phone` (
-  `Id` int(11) NOT NULL AUTO_INCREMENT,
-  `Name` varchar(45) NOT NULL,
-  `ContactId` int(11) NOT NULL,
-  `Number` varchar(45) NOT NULL,
-  PRIMARY KEY (`Id`),
-  UNIQUE KEY `Name_UNIQUE` (`Name`, `ContactId`),
-  KEY `FK_Phone_Contact_idx` (`ContactId`),
-  CONSTRAINT `FK_Phone_Contact` FOREIGN KEY (`ContactId`) REFERENCES `contact` (`Id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1
-$$
-
-INSERT INTO contact (Id, Name, LastName) VALUES (1, 'Oscar', 'Marin');
-$$
-
-
-INSERT INTO location (Name, ContactId, Latitude, Longitude) VALUES ('Home', 1, 10.036099, -84.081813);
-$$
-INSERT INTO phone (Name, ContactId, Number) VALUES ('Mobile', 1, '8880-1020');
-$$
-
-INSERT INTO contact (Id, Name, LastName) VALUES (2, 'Pamela', 'Molina');
-$$
-
-INSERT INTO location (Name, ContactId, Latitude, Longitude) VALUES ('Home', 2, 10.036099, -84.081813);
-$$
-INSERT INTO phone (Name, ContactId, Number) VALUES ('Mobile', 2, '8890-3040');
+INSERT INTO contact VALUES (2, 'Pamela', 'Molina', NULL, '+506 2220-3040', '+506 8830-6070', NULL, 10.036099, -84.081813);
 $$

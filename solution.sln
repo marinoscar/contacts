@@ -3,6 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "contacts", "contacts.csproj", "{998FF54E-476C-45AB-8414-871BB9710C36}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{707ED3BE-089D-4DBF-A2D9-AEE9F5D017C9}"
+	ProjectSection(SolutionItems) = preProject
+		contacts_database.sql = contacts_database.sql
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
