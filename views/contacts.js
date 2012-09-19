@@ -21,16 +21,30 @@ Ext.define('Contact', {
     idProperty: 'Id'
 });
 
+var firstLoad = true;
+
 var jsonStore = new Ext.data.JsonStore({
     storeId: 'jsonStore',
     model: 'Contact',
-    autoLoad: true,
     proxy: {
         type: 'rest',
         url: 'api/contacts',
         reader: {
             type: 'json',
             idProperty: 'Id'
+        },
+        writer: {
+            type: 'json',
+            idProperty: 'Id'
+        }
+    },
+    listeners: {
+        load: function () {
+            var grid = Ext.getCmp('contactGrid');
+            if (grid != undefined && firstLoad) {
+                grid.getSelectionModel().select(0);
+                firstLoad = false;
+            }
         }
     }
 });
@@ -49,6 +63,11 @@ Ext.onReady(function () {
         multiSelect: true,
         stateId: 'stateGrid',
         columns: [
+            {
+                text: 'Id',
+                sortable: true,
+                dataIndex: 'Id'
+            },
             {
                 text: 'Name',
                 flex: 1,
@@ -70,8 +89,8 @@ Ext.onReady(function () {
         listeners: {
             selectionchange: function (model, records) {
                 if (records[0]) {
-                    if (contactEditor != undefined)
-                        contactEditor.loadRecord(records[0]);
+                    if (contactForm != undefined)
+                        contactForm.loadRecord(records[0]);
                 }
             }
         },
@@ -85,22 +104,27 @@ Ext.onReady(function () {
         }
     });
 
-    var contactEditor = Ext.widget({
-        xtype: 'form',
-        layout: 'form',
-        collapsible: true,
-        renderTo: 'contactDiv',
-        id: 'contactEditor',
-        frame: true,
+    var contactForm = Ext.create('Ext.form.Panel', {
         title: 'Contact Editor',
-        bodyPadding: '5 5 0',
+        bodyPadding: 5,
         width: '90%',
+        renderTo: 'contactDiv',
+        url: 'api/contacts',
+        layout: 'anchor',
+        defaults: {
+            anchor: '100%'
+        },
         fieldDefaults: {
             msgTarget: 'side',
             labelWidth: 75
         },
         defaultType: 'textfield',
         items: [{
+            xtype: 'hiddenfield',
+            fieldLabel: 'Id',
+            name: 'Id'
+        },
+        {
             fieldLabel: 'Name',
             afterLabelTextTpl: required,
             name: 'Name',
@@ -118,8 +142,20 @@ Ext.onReady(function () {
 
         buttons: [{
             text: 'Save',
+            formBind: true,
+            disabled: true,
             handler: function () {
-                this.up('form').getForm().isValid();
+                var form = this.up('form').getForm();
+                if (form.isValid()) {
+                    form.submit({
+                        success: function (action) {
+                            jsonStore.load();
+                        },
+                        failure: function (action) {
+                            Ext.Msg.alert('Failed', action.result.msg);
+                        }
+                    });
+                }
             }
         }, {
             text: 'Cancel',
@@ -129,6 +165,7 @@ Ext.onReady(function () {
         }]
     });
 
+    jsonStore.load();
 });
 
 

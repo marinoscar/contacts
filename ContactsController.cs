@@ -13,12 +13,16 @@ namespace Contacts
             return repository.GetAllContacts();
         }
 
-        
-        //public void Post([FromBody]string value)
-        //{
-        //}
 
-        //public void Put(int id, [FromBody]string value)
+        public bool Post([FromBody]Contact contact)
+        {
+            var repository = new ContactsRepository();
+            repository.AddOrUpdate(contact);
+            repository.SaveChanges();
+            return true;
+        }
+
+        //public void Put(int id, [FromBody]string contacts)
         //{
         //}
 

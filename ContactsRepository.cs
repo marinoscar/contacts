@@ -32,5 +32,30 @@ namespace Contacts
         {
             return (from c in Contacts select c);
         } 
+
+        public void AddOrUpdate(Contact contact)
+        {
+            if (contact.Id <= 0)
+                Contacts.Add(contact);
+            else
+                Update(contact);
+        }
+
+        public void Update(Contact contact)
+        {
+            var persistedContact = Contacts.Single(c => c.Id == contact.Id);
+            persistedContact.Name = contact.Name;
+            persistedContact.LastName = contact.LastName;
+            persistedContact.Description = contact.Description;
+            persistedContact.OfficeNumber = contact.OfficeNumber;
+            persistedContact.MobileNumber = contact.MobileNumber;
+            persistedContact.Latitude = contact.Latitude;
+            persistedContact.Longitude = contact.Longitude;
+        }
+
+        public void SaveChanges()
+        {
+            DbContext.SaveChanges();
+        }
     }
 }
